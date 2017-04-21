@@ -2,6 +2,8 @@
 
 namespace WTG\Favorites\Interfaces;
 
+use Illuminate\Database\Eloquent\Builder;
+
 /**
  * Interface FavoriteInterface
  *
@@ -11,6 +13,24 @@ namespace WTG\Favorites\Interfaces;
  */
 interface FavoriteInterface
 {
+    /**
+     * Customer scope
+     *
+     * @param  Builder  $query
+     * @param  string  $customerId
+     * @return Builder
+     */
+    public function scopeCustomer(Builder $query, string $customerId): Builder;
+
+    /**
+     * Product scope
+     *
+     * @param  Builder  $query
+     * @param  string  $productId
+     * @return Builder
+     */
+    public function scopeProduct(Builder $query, string $productId): Builder;
+
     /**
      * Get the id
      *
@@ -55,4 +75,13 @@ interface FavoriteInterface
      * @return $this
      */
     public function setCustomerId(string $id);
+
+    /**
+     * Add a product to a customer their favorites.
+     *
+     * @param  string  $customerId
+     * @param  string  $productId
+     * @return bool|FavoriteInterface
+     */
+    public function add(string $customerId, string $productId);
 }

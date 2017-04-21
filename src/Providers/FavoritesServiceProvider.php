@@ -2,7 +2,9 @@
 
 namespace WTG\Favorites\Providers;
 
+use WTG\Favorites\Models\Favorite;
 use Illuminate\Support\ServiceProvider;
+use WTG\Favorites\Interfaces\FavoriteInterface;
 
 /**
  * Favorites service provider
@@ -21,6 +23,8 @@ class FavoritesServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__.'/../Migrations');
+
+        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'favorites');
     }
 
     /**
@@ -30,6 +34,6 @@ class FavoritesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(FavoriteInterface::class, Favorite::class);
     }
 }
